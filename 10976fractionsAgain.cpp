@@ -9,7 +9,6 @@ int main() {
         for (int x=k+1; x<2*k+1; x++) {
             if ((k*x)%(x-k) != 0) continue;
             int y = (k*x)/(x-k);
-            /* printf("%d %d\n", x, y); */
             v.push_back({y, x});
         }
         printf("%ld\n", v.size());

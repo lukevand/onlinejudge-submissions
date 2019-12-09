@@ -41,7 +41,6 @@ for _ in range(N):
     g = f(g)
     count = 0
     while not zero(g):
-        # p(G)
         count += 1
         g = f(g)
     print(count)

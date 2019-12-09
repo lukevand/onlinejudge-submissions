@@ -5,24 +5,24 @@ int main() {
     int N;
     scanf("%d", &N);
     while (N--) {
-        map<int,int> m;
+        unordered_map<int,int> m;
         int n, snowflake;
         scanf("%d", &n);
         int best = 0;
-        int currentRun = 0;
+        int start = 0;
         for (int i=0; i<n; i++) {
             scanf("%d", &snowflake);
             auto ret = m.emplace(snowflake, i);
             if (!ret.second) {
-                best = max(best, currentRun);
-                currentRun = i - (m[1] + 1);
-                m.erase(m.find(snowflake));
+                if (ret.first->second >= start) {
+                    start = ret.first->second + 1;
+                }
+                m.erase(ret.first);
                 m.emplace(snowflake, i);
-            } else {
-                currentRun++;
             }
+            best = max(best, i-start+1);
         }
-        printf("%d\n", max(best, (int)m.size()));
+        printf("%d\n", best);
     }
 
 

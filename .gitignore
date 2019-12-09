@@ -1,3 +1,5 @@
+.ccls-cache
 *.out
 *.class
-in
+in*
+out*
