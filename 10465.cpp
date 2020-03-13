@@ -6,38 +6,30 @@ int m, n, t;
 
 int memo[10010];
 
-int dp(int i) {
-    if (i == t) {
-        return 0;
-    }
-    if (i > t) return -INF;
-    int &ans = memo[i];
-    if (ans != -1) return ans;
-    return ans = max({
-            dp(i+1),
-            1 + dp(i+m),
-            1 + dp(i+n)
-    });
-}
-
 int main() {
     while (scanf("%d %d %d", &m, &n, &t) != EOF) {
         memset(memo, -1, sizeof memo);
+
         memo[0] = 0;
-        for (int i=0; i<=t; i++) {
-            if (memo[i] != -1) {
-                memo[i+m] = max(memo[i]+1, memo[i+m]);
-                memo[i+n] = max(memo[i]+1, memo[i+n]);
+        for (int i=0; i<t+5; i++) {
+            int x = (i-n>=0) ? memo[i-n] + 1 : 0;
+            int y = (i-m>=0) ? memo[i-m] + 1 : 0;
+            int best = max(x, y);
+            if (best > 0) {
+                memo[i] = best;
             }
         }
 
-        /* dp(0); */
-        /* printf("%d %d\n", memo[0], 7); */
-        for (int i=0; i<t+5; i++) {
-            printf("%d ", memo[i]);
+        if (memo[t] >= 0) {
+            printf("%d\n", memo[t]);
+        } else {
+            for (int i=t-1; i>=0; i--) {
+                if (memo[i] >= 0) {
+                    printf("%d %d\n", memo[i], t-i);
+                    break;
+                }
+            }
         }
-        printf("\n");
-        print(memo[t]);
     }
 }
 

@@ -15,6 +15,7 @@ for line in lines:
     if len(line.split()) == 1:
         print(1)
         continue
-    for l in [len(list(set(withdraw(k, 0, [])))) for k in range(0, moneys[-1]+moneys[-2])]:
-        best = max(best, l)
-    print(best)
+    # x = [len(list(set(withdraw(k, 0, [])))) for k in range(0, 2*moneys[-1])]
+    x = len(list(set(withdraw(sum(moneys), 0, []))))
+    print(x)
+    # print(max(x))

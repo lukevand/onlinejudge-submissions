@@ -1,4 +1,5 @@
-.ccls-cache
+.ccls-cache/
+.mypy_cache/
 *.out
 *.class
 in*

@@ -6,15 +6,18 @@ int main() {
         int count = 0;
         int butts = 0;
         int smokes = n;
-        while (1) {
-            count += smokes;
-            butts = smokes;
 
-        while (n >= k) {
-            n /= k;
-            count += n;
+        while (smokes > 0) {
+            /* printf("count=%d butts=%d smokes=%d\n", count, butts, smokes); */
+            butts += smokes;
+            count += smokes;
+            smokes = 0;
+
+            smokes += butts/k;
+            butts %= k;
         }
         printf("%d\n", count);
+
     }
     return 0;
 }

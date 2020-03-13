@@ -4,14 +4,12 @@ using namespace std;
 typedef pair<int,int> II;
 typedef vector<int> VI;
 typedef vector<VI> VVI;
-typedef vector<II> VII;
 
 int n, k;
 int a, b;
-bitset<110> visited;
 bitset<110> black;
 VVI G;
-int best;
+size_t bestSize;
 VI bestPath;
 
 bool canColor(int p) {
@@ -22,22 +20,26 @@ bool canColor(int p) {
 }
 
 void dfs(int cur, VI soFar) {
-    if (cur > best) {
-        print(cur);
-        best = soFar.size();
-        bestPath = soFar;
-    }
-    if (cur == n-1) return;
-
-    for (int v=0; v<n; v++) {
-        if (!black[v] && canColor(v)) {
-            black[v] = 1;
-            soFar.push_back(v);
-            dfs(cur+1, soFar);
-            soFar.pop_back();
-            black[v] = 0;
+    /* print(cur); */
+    /* for (auto x : soFar) cout << x << ' '; */
+    /* cout << '\n'; */
+    if (cur ==  n) {
+        if (soFar.size() > bestSize) {
+            bestSize = soFar.size();
+            bestPath = soFar;
         }
+        return;
     }
+
+    if (!black[cur] && canColor(cur)) {
+        black[cur] = 1;
+        soFar.push_back(cur);
+        dfs(cur+1, soFar);
+        black[cur] = 0;
+        soFar.pop_back();
+    }
+
+    dfs(cur+1, soFar);
 }
 
 int main() {
@@ -46,8 +48,7 @@ int main() {
     while (m--) {
         scanf("%d %d", &n, &k);
         G.assign(n, VI());
-        visited.reset();
-        best = -1;
+        bestSize = 0;
         bestPath.clear();
         for (int i=0; i<k; i++) {
             scanf("%d %d", &a, &b);
@@ -56,10 +57,9 @@ int main() {
             G[b].push_back(a);
         }
         dfs(0, VI());
-        printf("%d\n", best);
-        for (int i=0; i<best; i++) {
-            printf(i==best-1 ? "%d" : "%d ", bestPath[i]+1);
+        printf("%lu\n", bestSize);
+        for (size_t i=0; i<bestSize; i++) {
+            printf(i==bestSize-1 ? "%d\n" : "%d ", bestPath[i]+1);
         }
-        printf("\n");
     }
 }
